@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">The Notebook</string>
+    <string-array name="priorities">
+        <item>Default</item>
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+    </string-array>
+</resources>
