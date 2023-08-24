@@ -21,7 +21,7 @@ public interface NotebookDao {
     void delete(Notebook notebook);
 
     @Query("DELETE from Notebook")
-    void deleteAll ();
+    void deleteAll();
 
     @Query("SELECT * from Notebook")
     LiveData<List<Notebook>> getAllNotebooks();

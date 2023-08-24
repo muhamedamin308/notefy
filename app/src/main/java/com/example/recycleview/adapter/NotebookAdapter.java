@@ -45,7 +45,7 @@ public class NotebookAdapter extends RecyclerView.Adapter<NotebookAdapter.ItemsH
         }
         holder.notebookTitle.setText(notebook.getNotebookTitle());
         holder.notebookDescription.setText(notebook.getNotebookDescription1());
-        holder.item.setOnClickListener(view -> {
+        holder.note.setOnClickListener(view -> {
             Intent intent = new Intent(context, NotebookDetails.class);
             intent.putExtra("priority", notebook.getPriority());
             intent.putExtra("title", notebook.getNotebookTitle());
@@ -55,7 +55,7 @@ public class NotebookAdapter extends RecyclerView.Adapter<NotebookAdapter.ItemsH
         });
         holder.update.setOnClickListener(view -> {
             Intent intent = new Intent(context, AddNotebook.class);
-            intent.putExtra("ID", notebook.getNumber());
+            intent.putExtra("ID", notebook.getNoteId());
             intent.putExtra("TITLE", notebook.getNotebookTitle());
             intent.putExtra("DESC1", notebook.getNotebookDescription1());
             intent.putExtra("DESC2", notebook.getNotebookDescription2());
@@ -69,7 +69,7 @@ public class NotebookAdapter extends RecyclerView.Adapter<NotebookAdapter.ItemsH
         return notebooks.size();
     }
 
-    public void setNotebooks(List<Notebook> mNotebooks) {
+    public void initializeNotebooks(List<Notebook> mNotebooks) {
         notebooks = mNotebooks;
         notifyDataSetChanged();
     }
@@ -77,13 +77,11 @@ public class NotebookAdapter extends RecyclerView.Adapter<NotebookAdapter.ItemsH
     public Notebook getNotebookAt(int pos) {
         return notebooks.get(pos);
     }
-
-    //    private onPlanetListener onPlanetListener1 ;
     public static class ItemsHolder extends RecyclerView.ViewHolder {
+        public ConstraintLayout note;
         public CardView priority;
         public TextView notebookTitle;
         public TextView notebookDescription;
-        public ConstraintLayout item;
         public ImageView update;
 
         public ItemsHolder(View itemView) {
@@ -91,7 +89,7 @@ public class NotebookAdapter extends RecyclerView.Adapter<NotebookAdapter.ItemsH
             priority = itemView.findViewById(R.id.notebookPriority);
             notebookTitle = itemView.findViewById(R.id.notebookTitle);
             notebookDescription = itemView.findViewById(R.id.notebookDetails);
-            item = itemView.findViewById(R.id.linearCardView);
+            note = itemView.findViewById(R.id.linearCardView);
             update = itemView.findViewById(R.id.editNotebook);
         }
     }

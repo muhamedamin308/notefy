@@ -16,7 +16,6 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="2dp"
         android:background="@color/item_background"
-        android:onClick="planetData"
         android:padding="10dp">
 
         <androidx.cardview.widget.CardView
@@ -65,7 +64,6 @@
             android:id="@+id/editNotebook"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:onClick="planetData"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.991"

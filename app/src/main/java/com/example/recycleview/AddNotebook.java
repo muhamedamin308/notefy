@@ -26,7 +26,7 @@ public class AddNotebook extends AppCompatActivity implements AdapterView.OnItem
     private EditText notebookTitle, notebookDesc1, notebookDesc2;
     private String selectedPriority ;
     private AddNotebookViewModel mViewModel;
-    private int mID, priority1;
+    private int noteId, priority1;
     private boolean editMode;
 
     @Override
@@ -45,13 +45,12 @@ public class AddNotebook extends AppCompatActivity implements AdapterView.OnItem
         if (i.hasExtra("ID")){
             setTitle("Notebook Update");
             editMode = true;
-            mID = i.getIntExtra("ID" , -1);
+            noteId = i.getIntExtra("ID" , -1);
             notebookTitle.setText(i.getStringExtra("TITLE"));
             notebookDesc1.setText(i.getStringExtra("DESC1"));
             notebookDesc2.setText(i.getStringExtra("DESC2"));
             priority1 = Objects.requireNonNull(i.getExtras()).getInt("PRIORITY");
             notebookPriority.setBackgroundColor(getResources().getColor(priority1));
-
         }else{
             setTitle("Add New Notebook");
             editMode = false;
@@ -73,12 +72,12 @@ public class AddNotebook extends AppCompatActivity implements AdapterView.OnItem
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.saveItem) {
-            savePlanet();
+            saveNoteBook();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-    public void savePlanet(){
+    public void saveNoteBook(){
 
         String notebookName = notebookTitle.getText().toString();
         String notebookDesc1 = this.notebookDesc1.getText().toString();
@@ -87,19 +86,15 @@ public class AddNotebook extends AppCompatActivity implements AdapterView.OnItem
         switch (selectedPriority) {
             case "Low" :
                 priorities = R.color.low_priority;
-                priority1 = priorities;
                 break;
             case "Medium" :
                 priorities = R.color.medium_priority;
-                priority1 = priorities;
                 break;
             case "High" :
                 priorities = R.color.high_priority;
-                priority1 = priorities;
                 break;
             case "Default":
                 priorities = R.color.default_priority;
-                priority1 = priorities;
                 break;
         }
         if (notebookName.isEmpty() || notebookDesc1.isEmpty() || notebookDesc2.isEmpty()){
@@ -107,11 +102,12 @@ public class AddNotebook extends AppCompatActivity implements AdapterView.OnItem
             return ;
         }
         if (editMode){
+            priority1 = priorities;
             Notebook notebook = new Notebook(priority1 , notebookName , notebookDesc1 , notebookDesc2);
-            notebook.setNumber(mID);
-            mViewModel.updateAV(notebook);
+            notebook.setNoteId(noteId);
+            mViewModel.updateVM(notebook);
         }else{
-            mViewModel.insertAV(new Notebook(priorities , notebookName , notebookDesc1 , notebookDesc2));
+            mViewModel.insertAN(new Notebook(priorities , notebookName , notebookDesc1 , notebookDesc2));
         }
         finish();
     }

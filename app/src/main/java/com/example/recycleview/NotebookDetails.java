@@ -2,18 +2,14 @@ package com.example.recycleview;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-
 import java.util.Objects;
 
 public class NotebookDetails extends AppCompatActivity {
     TextView title, description, longDescription;
     CardView priority;
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

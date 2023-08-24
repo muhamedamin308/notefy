@@ -10,7 +10,7 @@ public class Notebook {
     public String notebookDescription2;
     public int priority;
     @PrimaryKey(autoGenerate = true)
-    int number;
+    int noteId;
 
     public Notebook(int priority,
                     String notebookTitle,
@@ -41,11 +41,11 @@ public class Notebook {
         return notebookDescription1;
     }
 
-    public int getNumber() {
-        return number;
+    public int getNoteId() {
+        return noteId;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setNoteId(int noteId) {
+        this.noteId = noteId;
     }
 }

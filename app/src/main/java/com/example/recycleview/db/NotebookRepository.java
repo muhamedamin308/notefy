@@ -8,94 +8,69 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 public class NotebookRepository {
-    private NotebookDao mNotebookDao;
-    private LiveData<List<Notebook>> getAllNotes;
+    private final NotebookDao notebookDao;
+    private final LiveData<List<Notebook>> getAllNotes;
 
-    public NotebookRepository(Application application){
+    public NotebookRepository(Application application) {
         NotebookRoomDB db = NotebookRoomDB.getInstance(application);
-        mNotebookDao = db.notebookDao();
-        getAllNotes = mNotebookDao.getAllNotebooks();
+        notebookDao = db.notebookDao();
+        getAllNotes = notebookDao.getAllNotebooks();
     }
 
-    //Operations
+    public void insertRepo(Notebook notebook) {
+        new InsertAsyncTask(notebookDao).execute(notebook);
+    }
+
+    public void updateRepo(Notebook notebook) {
+        new UpdateAsyncTask(notebookDao).execute(notebook);
+    }
+
+    public void deleteRepo(Notebook notebook) {
+        new DeleteAsyncTask(notebookDao).execute(notebook);
+    }
+
+    public LiveData<List<Notebook>> getAllNotesRepo() {
+        return getAllNotes;
+    }
 
 
-    //Insert
-        public void insertR (Notebook notebook){
-            new InsertAsyncTask(mNotebookDao).execute(notebook);
-        }
-    //Update
-        public void updateR (Notebook notebook){
-            new UpdateAsyncTask(mNotebookDao).execute(notebook);
-        }
-    //Delete
-        public void deleteR (Notebook notebook){
-            new DeleteAsyncTask(mNotebookDao).execute(notebook);
-        }
-    //Delete All
-        public void deleteAllPlanets (){
-            new DeleteAllAsyncTask(mNotebookDao).execute();
-        }
-    //Get All Data
-        public LiveData<List<Notebook>> getAlldata(){
-            return getAllNotes;
-        }
-
-
-
-    private static class InsertAsyncTask extends AsyncTask<Notebook, Void , Void>{
-        private NotebookDao mNotebookDao;
-
-        public InsertAsyncTask(NotebookDao notebookDao){
-            mNotebookDao = notebookDao;
+    private static class InsertAsyncTask extends AsyncTask<Notebook, Void, Void> {
+        private final NotebookDao notebookDao1;
+        public InsertAsyncTask(NotebookDao notebookDao) {
+            notebookDao1 = notebookDao;
         }
         @Override
         protected Void doInBackground(Notebook... notebooks) {
-            mNotebookDao.insert(notebooks[0]);
-
+            notebookDao1.insert(notebooks[0]);
             return null;
         }
     }
 
+    private static class UpdateAsyncTask extends AsyncTask<Notebook, Void, Void> {
+        private final NotebookDao notebookDao1;
 
-    private static class UpdateAsyncTask extends AsyncTask<Notebook, Void , Void>{
-        private NotebookDao mNotebookDao;
-
-        public UpdateAsyncTask(NotebookDao notebookDao){
-            mNotebookDao = notebookDao;
+        public UpdateAsyncTask(NotebookDao notebookDao) {
+            notebookDao1 = notebookDao;
         }
+
         @Override
         protected Void doInBackground(Notebook... notebooks) {
-            mNotebookDao.update(notebooks[0]);
+            notebookDao1.update(notebooks[0]);
             return null;
         }
     }
 
+    private static class DeleteAsyncTask extends AsyncTask<Notebook, Void, Void> {
+        private final NotebookDao notebookDao1;
 
-    private static class DeleteAsyncTask extends AsyncTask<Notebook, Void , Void>{
-        private NotebookDao mNotebookDao;
-
-        public DeleteAsyncTask(NotebookDao notebookDao){
-            mNotebookDao = notebookDao;
-        }
-        @Override
-        protected Void doInBackground(Notebook... notebooks) {
-            mNotebookDao.delete(notebooks[0]);
-            return null;
-        }
-    }
-    private static class DeleteAllAsyncTask extends AsyncTask<Void , Void , Void>{
-        private NotebookDao mNotebookDao;
-
-        public DeleteAllAsyncTask(NotebookDao notebookDao){
-            mNotebookDao = notebookDao;
+        public DeleteAsyncTask(NotebookDao notebookDao) {
+            notebookDao1 = notebookDao;
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            mNotebookDao.deleteAll();
+        protected Void doInBackground(Notebook... notebooks) {
+            notebookDao1.delete(notebooks[0]);
             return null;
         }
     }
-
 }

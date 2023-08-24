@@ -12,27 +12,17 @@ import com.example.recycleview.db.NotebookRepository;
 import java.util.List;
 
 public class NotebookViewModel extends AndroidViewModel {
-    private NotebookRepository mNotebookRepository;
-    private LiveData<List<Notebook>> mAllData;
+    private final NotebookRepository notebookRepository;
+    private final LiveData<List<Notebook>> getAllNotesVM;
     public NotebookViewModel(@NonNull Application application) {
         super(application);
-        mNotebookRepository = new NotebookRepository(application);
-        mAllData = mNotebookRepository.getAlldata();
-    }
-
-    public void insertV (Notebook notebook){
-        mNotebookRepository.insertR(notebook);
-    }
-    public void updateV (Notebook notebook){
-        mNotebookRepository.updateR(notebook);
+        notebookRepository = new NotebookRepository(application);
+        getAllNotesVM = notebookRepository.getAllNotesRepo();
     }
     public void deleteV (Notebook notebook){
-        mNotebookRepository.deleteR(notebook);
-    }
-    public void deleteAllPlanets (){
-        mNotebookRepository.deleteAllPlanets();
+        notebookRepository.deleteRepo(notebook);
     }
     public LiveData<List<Notebook>> getAllData(){
-        return mAllData;
+        return getAllNotesVM;
     }
 }
